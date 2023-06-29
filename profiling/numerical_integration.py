@@ -1,5 +1,5 @@
 import argparse
-
+import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -17,17 +17,27 @@ def parse_arguments():
         "b", type=float, help="upper bound for integration",
     )
 
-    return parser.parse_args()
+    return parser.parse_args(['3000', '0', '2'])
 
 
 def integrate_f(f, a, b, n):
-    s = []
+    # option 1
+    s = 0
+    dx = (b - a) / n
     for i in range(n):
-        dx = (b - a) / n
         x = a + (i + 0.5) * dx
-        y = f(x)
-        s = s + [y * dx]
-    return sum(s)
+        y = f(x)*dx
+        s += y
+    return s
+
+    # option 2
+    # i = np.arange(n)
+    # dx = (b - a) / n
+    # x = a + (i + 0.5) * dx
+    # y = f(x)*dx
+    # return np.sum(y)
+    
+
 
 
 def measure_integration_errors(f, F, n_max, a, b):
